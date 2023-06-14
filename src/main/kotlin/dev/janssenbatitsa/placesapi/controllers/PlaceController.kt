@@ -1,6 +1,6 @@
 package dev.janssenbatitsa.placesapi.controllers
 
-import dev.janssenbatitsa.placesapi.PlaceService
+import dev.janssenbatitsa.placesapi.services.PlaceService
 import dev.janssenbatitsa.placesapi.models.Place
 import dev.janssenbatitsa.placesapi.models.dtos.PlaceRequestDTO
 import jakarta.validation.Valid
