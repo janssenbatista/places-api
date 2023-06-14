@@ -1,4 +1,4 @@
-package dev.janssenbatitsa.placesapi
+package dev.janssenbatitsa.placesapi.services
 
 import dev.janssenbatitsa.placesapi.exceptions.PlaceAlreadyExistsException
 import dev.janssenbatitsa.placesapi.exceptions.PlaceNotFoundException
@@ -24,7 +24,7 @@ class PlaceService(private val placeRepository: PlaceRepository) {
 
     fun update(placeId: UUID, placeRequestDTO: PlaceRequestDTO): Place {
         val place = placeRepository.findById(placeId).orElseThrow {
-            PlaceNotFoundException("Place with id $placeId not found")
+            PlaceNotFoundException("Place with id $placeId not found!")
         }
         place.apply {
             name = placeRequestDTO.name
@@ -38,7 +38,7 @@ class PlaceService(private val placeRepository: PlaceRepository) {
 
     fun findPlaceById(placeId: UUID): Place {
         return placeRepository.findById(placeId).orElseThrow {
-            PlaceNotFoundException("Place with id $placeId not found")
+            PlaceNotFoundException("Place with id $placeId not found!")
         }
     }
 
@@ -49,7 +49,7 @@ class PlaceService(private val placeRepository: PlaceRepository) {
 
     fun deleteById(placeId: UUID) {
         val place = placeRepository.findById(placeId).orElseThrow {
-            PlaceNotFoundException("Place with id $placeId not found")
+            PlaceNotFoundException("Place with id $placeId not found!")
         }
         placeRepository.deleteById(place.id)
     }
