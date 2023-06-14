@@ -30,7 +30,7 @@ class PlaceService(private val placeRepository: PlaceRepository) {
             name = placeRequestDTO.name
             slug = placeRequestDTO.name.generateSlug()
             state = placeRequestDTO.state
-            city = placeRequestDTO.state
+            city = placeRequestDTO.city
             updatedAt = LocalDateTime.now()
         }
         return placeRepository.save(place)

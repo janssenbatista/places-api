@@ -23,7 +23,7 @@ class PlaceController(private val placeService: PlaceService) {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdPlace)
     }
 
-    @PostMapping("/{placeId}")
+    @PutMapping("/{placeId}")
     fun updatePlace(
         @PathVariable placeId: UUID,
         @RequestBody @Valid placeRequestDTO: PlaceRequestDTO
