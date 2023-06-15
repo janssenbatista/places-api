@@ -31,6 +31,8 @@ dependencies {
 	testImplementation "org.testcontainers:postgresql:1.18.1"
 	// Open API
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
+	// Slugify
+	implementation 'com.github.slugify:slugify:3.0.3'
 
 }
 

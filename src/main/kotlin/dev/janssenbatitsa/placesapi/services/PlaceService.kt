@@ -1,11 +1,11 @@
 package dev.janssenbatitsa.placesapi.services
 
+import com.github.slugify.Slugify
 import dev.janssenbatitsa.placesapi.exceptions.PlaceAlreadyExistsException
 import dev.janssenbatitsa.placesapi.exceptions.PlaceNotFoundException
 import dev.janssenbatitsa.placesapi.models.Place
 import dev.janssenbatitsa.placesapi.models.dtos.PlaceRequestDTO
 import dev.janssenbatitsa.placesapi.repositories.PlaceRepository
-import dev.janssenbatitsa.placesapi.utils.generateSlug
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
@@ -15,6 +15,7 @@ import java.util.*
 @Service
 class PlaceService(private val placeRepository: PlaceRepository) {
 
+
     fun save(placeRequestDTO: PlaceRequestDTO): Place {
         if (placeRepository.existsByName(placeRequestDTO.name)) {
             throw PlaceAlreadyExistsException("Place with name ${placeRequestDTO.name} already exists!")
@@ -23,12 +24,13 @@ class PlaceService(private val placeRepository: PlaceRepository) {
     }
 
     fun update(placeId: UUID, placeRequestDTO: PlaceRequestDTO): Place {
+        val slugify = Slugify.builder().build()
         val place = placeRepository.findById(placeId).orElseThrow {
             PlaceNotFoundException("Place with id $placeId not found!")
         }
         place.apply {
             name = placeRequestDTO.name
-            slug = placeRequestDTO.name.generateSlug()
+            slug = slugify.slugify(placeRequestDTO.name)
             state = placeRequestDTO.state
             city = placeRequestDTO.city
             updatedAt = LocalDateTime.now()
@@ -45,7 +47,7 @@ class PlaceService(private val placeRepository: PlaceRepository) {
     fun findAllPlaces(pageable: Pageable): Page<Place> = placeRepository.findAll(pageable)
 
     fun findAllByName(name: String, pageable: Pageable): Page<Place> =
-        placeRepository.findByNameContainingIgnoreCase(name, pageable)
+            placeRepository.findByNameContainingIgnoreCase(name, pageable)
 
     fun deleteById(placeId: UUID) {
         val place = placeRepository.findById(placeId).orElseThrow {
